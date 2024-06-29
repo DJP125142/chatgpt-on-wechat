@@ -6,6 +6,7 @@
   "text_to_image": "dall-e-2",
   "voice_to_text": "openai",
   "text_to_voice": "openai",
+  "open_ai_api_base": "https://api.openai.com/v1",
   "proxy": "",
   "hot_reload": false,
   "single_chat_prefix": [

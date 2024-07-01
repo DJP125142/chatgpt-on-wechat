@@ -1,7 +1,7 @@
 # encoding:utf-8
 
 import time
-
+import json
 import openai
 import openai.error
 import requests
@@ -106,6 +106,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             reply = Reply(ReplyType.ERROR, "Bot不支持处理{}类型的消息".format(context.type))
             return reply
 
+
     def reply_text(self, session: ChatGPTSession, api_key=None, args=None, retry_count=0) -> dict:
         """
         call openai's ChatCompletion to get the answer
@@ -122,11 +123,20 @@ class ChatGPTBot(Bot, OpenAIImage):
                 args = self.args
             response = openai.ChatCompletion.create(api_key=api_key, messages=session.messages, **args)
             # logger.debug("[CHATGPT] response={}".format(response))
-            # logger.info("[ChatGPT] reply={}, total_tokens={}".format(response.choices[0]['message']['content'], response["usage"]["total_tokens"]))
+            # logger.info("[ChatGPT] response={}, total_tokens={}".format(response.choices[0]['message']['content'], response["usage"]["total_tokens"]))
+            logger.info("[ChatGPT] response_type={}".format(type(response)))
+            # 处理下response偶发的会返回str类型的情况
+            if isinstance(response, str):
+                # 如果 response 是字符串，解析为 OpenAIObject
+                try:
+                    response = json.loads(response)
+                except json.JSONDecodeError as e:
+                    logger.debug("[CHATGPT]Failed to decode JSON from response")
+
             return {
-                "total_tokens": response["usage"]["total_tokens"],
-                "completion_tokens": response["usage"]["completion_tokens"],
-                "content": response.choices[0]["message"]["content"],
+                "total_tokens": response.usage.total_tokens,
+                "completion_tokens": response.usage.completion_tokens,
+                "content": response.choices[0].message.content,
             }
         except Exception as e:
             need_retry = retry_count < 2

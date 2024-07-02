@@ -25,7 +25,7 @@ class OpenAIImage(object):
                 prompt=query,  # 图片描述
                 n=1,  # 每次生成图片的数量
                 model=conf().get("text_to_image") or "dall-e-2",
-                # size=conf().get("image_create_size", "256x256"),  # 图片大小,可选有 256x256, 512x512, 1024x1024
+                size=conf().get("image_create_size", "256x256"),  # 图片大小,可选有 256x256, 512x512, 1024x1024
             )
             image_url = response["data"][0]["url"]
             logger.info("[OPEN_AI] image_url={}".format(image_url))

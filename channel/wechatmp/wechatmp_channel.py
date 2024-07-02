@@ -117,6 +117,7 @@ class WechatMPChannel(ChatChannel):
                 filename = receiver + "-" + str(context["msg"].msg_id) + "." + image_type
                 content_type = "image/" + image_type
                 try:
+                    logger.info("[wechatmp] image uploaded, filename {}, image_storage {}, content_type {}".format(filename, image_storage, content_type))
                     response = self.client.material.add("image", (filename, image_storage, content_type))
                     logger.debug("[wechatmp] upload image response: {}".format(response))
                 except WeChatClientException as e:
@@ -132,7 +133,6 @@ class WechatMPChannel(ChatChannel):
                 filename = receiver + "-" + str(context["msg"].msg_id) + "." + image_type
                 content_type = "image/" + image_type
                 try:
-                    logger.info("[wechatmp] image uploaded, filename {}, image_storage {}, content_type {}".format(filename, image_storage, content_type))
                     response = self.client.material.add("image", (filename, image_storage, content_type))
                     logger.debug("[wechatmp] upload image response: {}".format(response))
                 except WeChatClientException as e:

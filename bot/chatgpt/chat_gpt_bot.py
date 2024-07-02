@@ -136,7 +136,7 @@ class ChatGPTBot(Bot, OpenAIImage):
             return {
                 "total_tokens": response["usage"]["total_tokens"],
                 "completion_tokens": response["usage"]["completion_tokens"],
-                "content": response["choices"][0]["message.content"],
+                "content": response["choices"][0]["message"]["content"],
             }
         except Exception as e:
             need_retry = retry_count < 2

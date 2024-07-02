@@ -259,9 +259,8 @@ def drag_sensitive(config):
     return config
 
 
-def load_config():
+def load_config(config_path="./config.json"):
     global config
-    config_path = "./config.json"
     if not os.path.exists(config_path):
         logger.info("配置文件不存在，将使用config-template.json模板")
         config_path = "./config-template.json"

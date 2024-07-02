@@ -96,11 +96,10 @@ class ChatGPTBot(Bot, OpenAIImage):
 
         elif context.type == ContextType.IMAGE_CREATE:
             ok, retstring = self.create_img(query, 0)
-            logger.info("[ChatGPT] ok={},retstring={}".format(ok,retstring))
             reply = None
             if ok:
-                logger.info("[ChatGPT] IMAGE_URL={}".format(retstring))
-                reply = Reply(ReplyType.IMAGE_URL, retstring)
+                reply = Reply(ReplyType.TEXT, retstring)
+                # reply = Reply(ReplyType.IMAGE_URL, retstring)
             else:
                 reply = Reply(ReplyType.ERROR, retstring)
             return reply

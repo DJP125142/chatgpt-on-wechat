@@ -114,6 +114,9 @@ class WechatMPChannel(ChatChannel):
                     image_storage.write(block)
                 image_storage.seek(0)
                 image_type = imghdr.what(image_storage)
+                # 兼容逻辑：如果是 webp 类型，则转换为 jpeg 类型，不然微信公众号上传会失败
+                if image_type == 'webp':
+                    image_type = 'jpeg'
                 filename = receiver + "-" + str(context["msg"].msg_id) + "." + image_type
                 content_type = "image/" + image_type
                 try:

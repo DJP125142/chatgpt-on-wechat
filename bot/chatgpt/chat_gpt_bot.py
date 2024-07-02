@@ -98,8 +98,8 @@ class ChatGPTBot(Bot, OpenAIImage):
             ok, retstring = self.create_img(query, 0)
             reply = None
             if ok:
-                reply = Reply(ReplyType.TEXT, retstring)
-                # reply = Reply(ReplyType.IMAGE_URL, retstring)
+                reply = Reply(ReplyType.TEXT, "点击链接查看图片："+retstring)    # 受微信公众号限制上传图片会失败，先采用回复文字链接方式
+                # reply = Reply(ReplyType.IMAGE_URL, retstring) # 原本能直接回复图片
             else:
                 reply = Reply(ReplyType.ERROR, retstring)
             return reply

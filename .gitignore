@@ -24,6 +24,8 @@ plugins/**/
 !plugins/tool
 !plugins/banwords
 !plugins/banwords/**/
+!plugins/timetask
+plugins/timetask/taskFile/*
 plugins/banwords/__pycache__
 plugins/banwords/lib/__pycache__
 !plugins/hello

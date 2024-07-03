@@ -9,6 +9,7 @@ import json
 import os
 import threading
 import time
+import uuid
 
 import requests
 
@@ -229,11 +230,19 @@ class WechatChannel(ChatChannel):
                 image_storage.write(block)
             logger.info(f"[WX] download image success, size={size}, img_url={img_url}")
             image_storage.seek(0)
+            # 添加对 .webp 图片格式的处理
+            if img_url.endswith(".webp"):
+                image_storage = self._convert_webp_to_png(image_storage)
+
             itchat.send_image(image_storage, toUserName=receiver)
             logger.info("[WX] sendImage url={}, receiver={}".format(img_url, receiver))
         elif reply.type == ReplyType.IMAGE:  # 从文件读取图片
             image_storage = reply.content
             image_storage.seek(0)
+            # 添加对 .webp 图片格式的处理
+            if image_storage.name.endswith(".webp"):
+                image_storage = self._convert_webp_to_png(image_storage)
+
             itchat.send_image(image_storage, toUserName=receiver)
             logger.info("[WX] sendImage, receiver={}".format(receiver))
         elif reply.type == ReplyType.FILE:  # 新增文件回复类型
@@ -257,6 +266,17 @@ class WechatChannel(ChatChannel):
             video_storage.seek(0)
             itchat.send_video(video_storage, toUserName=receiver)
             logger.info("[WX] sendVideo url={}, receiver={}".format(video_url, receiver))
+
+    def _convert_webp_to_png(self, webp_image):
+        from PIL import Image
+        webp_image.seek(0)
+        img = Image.open(webp_image).convert("RGBA")
+        png_image = io.BytesIO()
+        unique_filename = f"{uuid.uuid4()}.png"
+        img.save(png_image, format="PNG")
+        png_image.name = unique_filename
+        png_image.seek(0)
+        return png_image
 
 def _send_login_success():
     try:

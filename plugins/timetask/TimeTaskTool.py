@@ -389,6 +389,7 @@ class TaskManager(object):
         tempTimeStr = timeStr
         #对比精准到分（忽略秒）
         current_time = self.nowTime().format('HH:mm')
+        print(f"当前时间：{current_time}")
 
         #如果是分钟
         if tempTimeStr.count(":") == 1:

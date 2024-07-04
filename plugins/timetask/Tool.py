@@ -704,7 +704,7 @@ class TimeTaskModel:
         #如果可被解析为具体日期
         if circleStr in ['今天', '明天', '后天']:
               #今天
-              today = self.nowTime('local')
+              today = arrow.now('local').to(self.timezone)
               if circleStr == '今天':
                     # 将日期格式化为 YYYY-MM-DD 的格式
                     formatted_today = today.format('YYYY-MM-DD')

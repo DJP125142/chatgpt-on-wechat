@@ -29,7 +29,7 @@ class KFCwenan(Plugin):
             return
         self.content = e_context["context"].content.strip()
 
-        if self.content == "KFC":
+        if self.content in ["KFC", "kfc", "疯狂星期四"]:
             logger.info(f"[{__class__.__name__}] 收到消息: {self.content}")
             reply = Reply()
             result = self.KFCwenan()

@@ -22,6 +22,7 @@ plugins/**/
 !plugins/finish
 !plugins/godcmd
 !plugins/tool
+!plugins/KFCwenan
 !plugins/banwords
 !plugins/banwords/**/
 !plugins/timetask

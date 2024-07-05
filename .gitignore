@@ -32,6 +32,7 @@ plugins/banwords/lib/__pycache__
 !plugins/linkai
 !plugins/timetask
 !plugins/KFCwenan
+!plugins/plugin_replicate
 plugins/timetask/taskFile/*
 plugins/timetask/config.json
 

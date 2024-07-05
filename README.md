@@ -6,8 +6,10 @@
 
 #### 查阅chatgpt-on-wechat文档中的[项目简介](https://github.com/zhayujie/chatgpt-on-wechat#%E7%AE%80%E4%BB%8B) 和 [快速开始](https://github.com/zhayujie/chatgpt-on-wechat#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B)
 
-## 此项目改动
-+ 修复了openai偶发的返回response为str类型时解析报错问题
-+ 增加了两个入口文件和配置文件支持同时启动微信号和公众号
-+ 修复了itchat无法发送webp格式图片问题
-+ 新增了一个定时任务插件，并解决插件内默认时区问题
+## 此仓库支持功能如下：
+-  ✅   **【bug修复】：** 修复了openai偶发的返回response为str类型时解析报错问题
+-  ✅   **【多端启动】：** 新增了两个入口文件和配置文件支持同时启动微信号和公众号
+-  ✅   **【bug修复】：** 修复了itchat无法发送webp格式图片问题
+-  ✅   **【定时任务】：** 新增了定时任务插件timetask
+-  ✅   **【KFC文案】：** 新增了随机生成KFC疯狂星期四文案生成器插件
+-  ✅   **【画图插件】：** 新增了replicate api画图的插件（因为openai的dall-e-3的画图经常失败）

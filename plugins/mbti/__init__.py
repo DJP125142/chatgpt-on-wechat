@@ -1,0 +1,1 @@
+from .mbti import *

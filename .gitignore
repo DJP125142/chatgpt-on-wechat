@@ -34,6 +34,7 @@ plugins/banwords/lib/__pycache__
 !plugins/KFCwenan
 !plugins/mbti
 !plugins/plugin_replicate
+!plugins/pregnancy_knowledge
 plugins/timetask/taskFile/*
 plugins/timetask/config.json
 

@@ -39,37 +39,40 @@ class PregnancyKnowledge(Plugin):
         content = e_context["context"].content.strip()
         logger.debug(f"[PregnancyKnowledge] on_handle_context. content: {content}")
 
-        pregnancy_knowledge = ""
-        # 计算孕期
-        if content == "孕期第n周":
-            conf = super().load_config()
-            due_date = conf['due_date']
-            days_until_due_date, current_pregnancy_week, current_pregnancy_day = self.calculatePregnancyDetails(due_date)
-            pregnancy_knowledge += f"我的小宝贝呀，当前孕{current_pregnancy_week}周{current_pregnancy_day}天，离预产期{days_until_due_date}天\n\n"
-            week = current_pregnancy_week
+        if content.startswith("孕期第"):
+            pregnancy_knowledge = ""
+            week = 1
+            # 计算孕期
+            if content == "孕期第n周":
+                conf = super().load_config()
+                due_date = conf['due_date']
+                days_until_due_date, current_pregnancy_week, current_pregnancy_day = self.calculatePregnancyDetails(
+                    due_date)
+                pregnancy_knowledge += f"我的小宝贝呀，当前孕{current_pregnancy_week}周{current_pregnancy_day}天，离预产期{days_until_due_date}天\n\n"
+                week = current_pregnancy_week
 
-        # 指定孕期
-        match = re.search(r'孕期第(\d+|[零一二三四五六七八九十百]+)周', content)
-        if match:
-            week_str = match.group(1)
-            if week_str.isdigit():
-                week = int(week_str)
+            # 指定孕期
+            match = re.search(r'孕期第(\d+|[零一二三四五六七八九十百]+)周', content)
+            if match:
+                week_str = match.group(1)
+                if week_str.isdigit():
+                    week = int(week_str)
+                else:
+                    week = self.chinese_to_arabic(week_str)
+
+            reply = Reply()
+            pregnancy_knowledge += self.getPregnancyKnowledge(week)
+            result = pregnancy_knowledge
+            if result is not None:
+                reply.type = ReplyType.TEXT
+                reply.content = result
+                e_context["reply"] = reply
+                e_context.action = EventAction.BREAK_PASS
             else:
-                week = self.chinese_to_arabic(week_str)
-
-        reply = Reply()
-        pregnancy_knowledge += self.getPregnancyKnowledge(week)
-        result = pregnancy_knowledge
-        if result is not None:
-            reply.type = ReplyType.TEXT
-            reply.content = result
-            e_context["reply"] = reply
-            e_context.action = EventAction.BREAK_PASS
-        else:
-            reply.type = ReplyType.ERROR
-            reply.content = "获取失败,等待修复⌛️"
-            e_context["reply"] = reply
-            e_context.action = EventAction.BREAK_PASS
+                reply.type = ReplyType.ERROR
+                reply.content = "获取失败,等待修复⌛️"
+                e_context["reply"] = reply
+                e_context.action = EventAction.BREAK_PASS
 
 
 

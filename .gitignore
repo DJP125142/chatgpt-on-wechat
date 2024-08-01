@@ -35,6 +35,7 @@ plugins/banwords/lib/__pycache__
 !plugins/mbti
 !plugins/plugin_replicate
 !plugins/pregnancy_knowledge
+!plugins/olympic
 plugins/timetask/taskFile/*
 plugins/timetask/config.json
 
